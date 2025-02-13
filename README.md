@@ -21,10 +21,7 @@ Easy Meteor integration for [Altcha](https://altcha.org). Works with any fronten
 ## Installation
 
 First, add this package via `meteor add jkuester:altcha`
-
-Then install Altcha via `npm install --save altcha altcha-lib`.
-They are installed manually because you will otherwise not benefit from automated security
-audits, such as dependabot etc.
+Then install the Altcha client input type via `npm install --save altcha`.
 
 ### Settings setup
 
