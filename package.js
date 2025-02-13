@@ -10,12 +10,12 @@ Package.describe({
 	documentation: "README.md",
 });
 
-ALTCHA_VERSION = '1.2.0'
+ALTCHA_VERSION = "1.2.0";
 
 Package.onUse((api) => {
 	Npm.depends({
 		"altcha-lib": ALTCHA_VERSION,
-	})
+	});
 	api.versionsFrom("3.0.4");
 	api.use(["ecmascript", "webapp", "mongo"], "server");
 	api.mainModule("altcha.js", "server");
