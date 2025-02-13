@@ -54,5 +54,5 @@ jobs:
             ${{ runner.os }}-node-22-
 
       - run: |
-          npm run ci
+          npm ci
           npm run test:once
