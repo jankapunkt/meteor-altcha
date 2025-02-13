@@ -29,8 +29,8 @@ jobs:
 
       - run: |
           npm ci
-          npm run lint
-          npm run format
+          npm run lint:check
+          npm run format:check
 
   tests:
     name: Meteor tests
