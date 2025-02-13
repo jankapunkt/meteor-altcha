@@ -4,17 +4,22 @@
 	"description": "Drop-In to use altcha",
 	"main": "altcha-tests.js",
 	"scripts": {
+		"docs:api": "jsdoc2md altcha.js > API.md",
 		"format:check": "npx @biomejs/biome format ./",
 		"format:write": "npx @biomejs/biome format --write ./",
 		"lint:check": "npx @biomejs/biome lint ./",
 		"lint:write": "npx @biomejs/biome lint --write ./",
-		"test": "test"
+		"test:once": "mtest --once --port=8888 --settings=tests.json --package jkuester:altcha",
+		"test:watch": "mtest --port=8888 --settings=tests.json --package jkuester:altcha"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/jankapunkt/meteor-altcha.git"
 	},
-	"keywords": ["meteor", "altcha"],
+	"keywords": [
+		"meteor",
+		"altcha"
+	],
 	"author": "Jan Küster",
 	"license": "MIT",
 	"bugs": {
@@ -22,6 +27,9 @@
 	},
 	"homepage": "https://github.com/jankapunkt/meteor-altcha#readme",
 	"devDependencies": {
-		"@biomejs/biome": "1.9.4"
+		"@biomejs/biome": "1.9.4",
+		"@zodern/mtest": "file:../mtest",
+		"jsdoc": "^4.0.4",
+		"jsdoc-to-markdown": "^9.1.1"
 	}
 }

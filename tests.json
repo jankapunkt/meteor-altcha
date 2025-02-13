@@ -1,0 +1,14 @@
+{
+  "public": {
+    "altcha": {
+      "challengeUrl": "/altcha-challenge"
+    }
+  },
+  "altcha": {
+    "algorithm": "SHA-256",
+    "challengeUrl": "/altcha-challenge",
+    "hmacKey": "01234567890abcdefghijklmnopqrstuvwxyz",
+    "maxNumber": 1000000,
+    "expirationAfter": 300000
+  }
+}
