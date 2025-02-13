@@ -17,8 +17,13 @@ Package.onUse((api) => {
 });
 
 Package.onTest((api) => {
+	Npm.depends({
+		chai: "5.1.2",
+		"altcha-lib": "1.2.0",
+	});
 	api.use("ecmascript");
-	api.use("tinytest");
+	api.use("meteortesting:mocha@3.2.0");
+	api.use("mongo");
 	api.use("jkuester:altcha");
-	api.mainModule("altcha-tests.js");
+	api.mainModule("altcha-tests.js", "server");
 });

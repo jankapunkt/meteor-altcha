@@ -98,7 +98,7 @@ export const init = ({ debug, storage } = {}) => {
 		const challenge = await createChallenge({
 			algorithm: internal.algorithm,
 			hmacKey: internal.hmacKey,
-			maxNumber: 100000,
+			maxNumber: internal.maxNumber,
 			expires,
 		});
 
@@ -127,13 +127,21 @@ export const init = ({ debug, storage } = {}) => {
  */
 export const validate = async (payload) => {
 	internal.debug("validate payload", payload);
-	const dataStr = atob(payload);
-	const data = JSON.parse(dataStr);
+	if (typeof payload !== "string") {
+		return false;
+	}
+
+	const data = parse(payload);
+	if (!data) {
+		return false;
+	}
+
 	const { challenge } = data;
 	internal.debug("payload challenge is", challenge);
 
 	// prevent retry attack
-	const wasSolved = await internal.storage.countDocuments({ challenge });
+	const wasSolved =
+		challenge && (await internal.storage.countDocuments({ challenge }));
 	if (wasSolved) {
 		return false;
 	}
@@ -145,4 +153,13 @@ export const validate = async (payload) => {
 	await internal.storage.insertAsync({ challenge });
 
 	return isValid;
+};
+
+const parse = (p) => {
+	try {
+		const dataStr = atob(p);
+		return JSON.parse(dataStr);
+	} catch (e) {
+		return null;
+	}
 };

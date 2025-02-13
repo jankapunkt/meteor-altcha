@@ -9,17 +9,14 @@
 		"format:write": "npx @biomejs/biome format --write ./",
 		"lint:check": "npx @biomejs/biome lint ./",
 		"lint:write": "npx @biomejs/biome lint --write ./",
-		"test:once": "mtest --once --port=8888 --settings=tests.json --package jkuester:altcha",
-		"test:watch": "mtest --port=8888 --settings=tests.json --package jkuester:altcha"
+		"test:once": "TEST_CLIENT=0 meteor test-packages --once --port=8888 --settings=tests.json ./ --driver-package=meteortesting:mocha",
+		"test:watch": "TEST_CLIENT=0 meteor test-packages --port=8888 --settings=tests.json ./ --driver-package=meteortesting:mocha"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/jankapunkt/meteor-altcha.git"
 	},
-	"keywords": [
-		"meteor",
-		"altcha"
-	],
+	"keywords": ["meteor", "altcha"],
 	"author": "Jan Küster",
 	"license": "MIT",
 	"bugs": {
@@ -28,7 +25,6 @@
 	"homepage": "https://github.com/jankapunkt/meteor-altcha#readme",
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
-		"@zodern/mtest": "file:../mtest",
 		"jsdoc": "^4.0.4",
 		"jsdoc-to-markdown": "^9.1.1"
 	}
