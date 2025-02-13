@@ -1,6 +1,7 @@
 # Meteor Altcha
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Test suite](https://github.com/jankapunkt/meteor-altcha/actions/workflows/testsuite.yml/badge.svg)](https://github.com/jankapunkt/meteor-altcha/actions/workflows/testsuite.yml)
 
 Easy Meteor integration for [Altcha](https://altcha.org). Works with any frontend.
 
