@@ -9,6 +9,10 @@ global.Worker = Worker;
 
 const base64 = (obj) => btoa(JSON.stringify(obj));
 const { challengeUrl, algorithm, maxNumber } = Meteor.settings.altcha;
+const asyncTimeout = (ms) =>
+	new Promise((resolve) => {
+		setTimeout(() => resolve(), ms);
+	});
 const getChallenge = () => {
 	/*
    returns
@@ -117,23 +121,28 @@ describe("altcha", () => {
 		}
 	});
 
-	it("accepts a correct payload", async function () {
-		this.timeout(10000);
+	it("accepts a correct payload", async () => {
 		const data = await getChallenge();
 		const payload = await getPayload(data);
 		const isValid = await validate(payload);
 		expect(isValid).to.equal(true);
 	});
 
-	it("denies a replay of a correct payload", async function () {
-		this.timeout(10000);
+	it("denies a replay of a correct payload", async () => {
 		const data = await getChallenge();
 		const payload = await getPayload(data);
 		const isValid = await validate(payload);
 		expect(isValid).to.equal(true);
+		expect(await validate(payload)).to.equal(false);
+		expect(await validate(payload)).to.equal(false);
+		expect(await validate(payload)).to.equal(false);
+	});
 
-		expect(await validate(payload)).to.equal(false);
-		expect(await validate(payload)).to.equal(false);
-		expect(await validate(payload)).to.equal(false);
+	it("denies an expired payload", async () => {
+		const data = await getChallenge();
+		const payload = await getPayload(data);
+		await asyncTimeout(Meteor.settings.altcha.expirationAfter + 100);
+		const isValid = await validate(payload);
+		expect(isValid).to.equal(false);
 	});
 });

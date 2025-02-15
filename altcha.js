@@ -92,8 +92,14 @@ export const init = ({ debug, storage } = {}) => {
 	internal.debug(`create endpoint [GET] ${internal.challengeUrl}`);
 	WebApp.rawHandlers.get(internal.challengeUrl, async (req, res) => {
 		internal.debug("request challenge");
-		const expires = new Date();
-		expires.setTime(expires.getTime() + internal.expirationAfter);
+
+		let expires;
+
+		if (typeof internal.expirationAfter === "number") {
+			const timestamp = Date.now() + internal.expirationAfter;
+			expires = new Date(timestamp);
+			internal.debug("set challenge expiration to", expires.toLocaleString());
+		}
 
 		const challenge = await createChallenge({
 			algorithm: internal.algorithm,
@@ -102,7 +108,7 @@ export const init = ({ debug, storage } = {}) => {
 			expires,
 		});
 
-		internal.debug({ challenge });
+		internal.debug("challenge created", challenge);
 		res
 			.set({
 				"Cache-Control":
@@ -146,8 +152,14 @@ export const validate = async (payload) => {
 		return false;
 	}
 
+	const shouldCheckExpiration = typeof internal.expirationAfter === "number";
+
 	// actual verification
-	const isValid = await verifySolution(data, internal.hmacKey, true);
+	const isValid = await verifySolution(
+		data,
+		internal.hmacKey,
+		shouldCheckExpiration,
+	);
 
 	// record, that challenge was solved
 	await internal.storage.insertAsync({ challenge });
